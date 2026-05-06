@@ -6,7 +6,7 @@ version:   0.0.11
 language:  de
 narrator:  Deutsch Female
 
-edit:      true
+edit:      https://github.dev/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/blob/main/materials/arbeitsschutz_leitern2.md
 date:      2025-07-21
 
 icon:      ../assets/img/Logo_234px.png

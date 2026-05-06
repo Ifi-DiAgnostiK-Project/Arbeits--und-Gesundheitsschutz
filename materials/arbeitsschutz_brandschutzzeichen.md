@@ -6,7 +6,7 @@ version:   0.0.8
 language:  de
 narrator:  Deutsch Female
 
-edit:      true
+edit:      https://github.dev/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/blob/main/materials/arbeitsschutz_brandschutzzeichen.md
 
 date:      2025-07-21
 logo:      https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/ISO_7010_F001.svg/1920px-ISO_7010_F001.svg.png
