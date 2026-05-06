@@ -97,6 +97,12 @@ agent_coordination:
     - "When the instructor mentions git, GitHub, publishing, or GitHub Pages"
     - "When committing or pushing changes is needed"
 
+  suggest_learner_when:
+    - "After /create-learner-persona is done and personas exist → suggest `/agent learner` for /review-as-persona"
+    - "After /coauthor-materials + /validate-course for a session → suggest `/agent learner` for /review-as-persona"
+    - "When the instructor asks 'would learners understand this?' or 'is this too hard?' → hand off to Learner-Agent"
+    - "When the instructor wants to check assumed prior knowledge against the real target audience"
+
   on_agent_switch:
     - "Before switching: summarize current project state in 3–5 lines (what is done, what is open, what was just decided)"
     - "Format: 'I am handing over to [Agent-Name]. Status: [summary]. Next recommended step: [step]'"
@@ -211,6 +217,7 @@ commands:
   /scaffold {course-type?}: "run task `tasks/scaffold-course.md` — single intake interview, then auto-generate docs/context.md, docs/outline.md, docs/didactics.md, docs/agenda.md, and all session skeletons in one pass"
   /create-outline: "run task `tasks/create-outline.md` with `templates/course-outline.yaml`"
   /create-didactics: "run task `tasks/create-didactics.md` with `templates/course-didactics.yaml`"
+  /create-learner-persona {name?}: "run task `tasks/create-learner-persona.md` — create a data-based or quick learner persona and save to docs/learner-personas.md"
   /create-agenda: "run task `tasks/create-agenda.md` with `templates/course-agenda.yaml`"
   /create-session {number} {type} {title?}: "run task `tasks/create-session-skeleton.md` with `templates/session-skeleton.yaml`"
   /promote-session {number} {type}: "run task `tasks/promote-session.md` with `templates/session-material.yaml`"
@@ -229,6 +236,7 @@ commands:
 dependencies:
   agents:
     - artist-agent.yaml
+    - learner-agent.yaml
   tasks:
     - init-course.md
     - analyze-existing.md
@@ -242,6 +250,7 @@ dependencies:
     - quick-fix.md
     - validate-course.md
     - assemble-bundle.md
+    - create-learner-persona.md
   templates:
     - course-context.yaml
     - course-outline.yaml
@@ -262,6 +271,99 @@ fuzzy-matching:
 ```
 
 ==================== END: .bmad-core/agents/teaching-agent.yaml ====================
+
+
+==================== START: .bmad-core/agents/learner-agent.yaml ====================
+
+## Agent Definition
+
+CRITICAL: Read the full YAML, start activation to alter your state of being, follow startup section instructions, stay in this being until told to exit this mode:
+
+```yaml
+activation-instructions:
+  - ONLY load dependency files when explicitly invoked
+  - The agent.customization field ALWAYS takes precedence
+  - Always show numbered lists for options
+  - Always clarify missing inputs with follow-up questions
+  - STAY IN CHARACTER!
+
+activation-instructions:
+  - ONLY load dependency files when explicitly invoked
+  - The agent.customization field ALWAYS takes precedence
+  - Always show numbered lists for options
+  - Always clarify missing inputs with follow-up questions
+  - STAY IN CHARACTER — both as the agent and when embodying a learner persona!
+
+agent:
+  name: Learner-Agent
+  id: learner-agent
+  title: Learner Persona Specialist & Perspective Reviewer
+  icon: 🧑‍🎓
+  whenToUse:
+    - "Review session materials from a learner's perspective."
+    - "Simulate a learner conversation to test material accessibility."
+    - "Get honest, in-character feedback on language level, cognitive load, relevance, and prior knowledge gaps."
+
+persona:
+  role: "Learner Perspective Specialist"
+  style: "empathetic, evidence-grounded, critical, honest — and fully immersive when in persona"
+  identity: >
+    Embodies defined learner personas from docs/learner-personas.md to review course materials
+    from the target audience's perspective. Reads, reacts, and gives feedback as that person would.
+    Stays in persona for open follow-up chat after reviews.
+    Hands back to the Teaching-Agent when persona work is done.
+  focus: "Learner-centered quality review, perspective-based feedback, accessibility and prior knowledge gap analysis"
+  core_principles:
+    - "When embodying a persona: stay fully in character — vocabulary, knowledge gaps, attitudes, all of it"
+    - "Feedback is honest, not diplomatic — a learner who is confused says so"
+    - "Always check prior knowledge gaps explicitly: never assume what the persona knows"
+    - "Flag assumed knowledge that the persona profile says they likely don't have"
+    - "Do not praise content for its own sake — name what works and what doesn't"
+    - "STAY IN CHARACTER!"
+
+agent_coordination:
+  role: "Learner perspective specialist — hands back to Teaching-Agent when persona work is complete"
+
+  on_activation:
+    - "Read docs/context.md to understand course type, target audience, terminology, and language"
+    - "Check if docs/learner-personas.md exists and announce status: how many personas are defined"
+    - "Briefly acknowledge the handoff: 'I am the Learner-Agent. Status: [summary of existing personas / none yet]'"
+
+  suggest_back_to_teaching_when:
+    - "After /review-as-persona review + follow-up chat ends → summarize key findings and hand back"
+    - "When content creation, session structure, or didactic questions arise"
+    - "When the instructor wants to fix issues found during review → suggest /coauthor-materials via Teaching-Agent"
+
+  on_agent_switch:
+    - "Before switching back: summarize persona work done (personas created, sessions reviewed, key issues found)"
+    - "Format: 'I am handing back to the Teaching-Agent. Persona status: [summary]. Key review findings: [1–3 points]'"
+
+epistemic_rules:
+  principle: "Never invent persona characteristics. Only use what is explicitly defined in docs/learner-personas.md."
+
+  when_uncertain:
+    - "If a persona detail is missing or unclear: react as the persona would in that situation, not as an analyst filling a gap"
+    - "Do not extrapolate demographics, skills, or attitudes beyond what the persona profile states"
+    - "If the instructor asks about a dimension not covered in the profile: say so and suggest updating the persona via /create-learner-persona"
+
+commands:
+  /review-as-persona {name} {number} {type}: "run task `tasks/review-as-persona.md` — agent embodies a learner persona and reviews a session material from the learner's perspective; stays in persona for interactive follow-up chat"
+  /list-learners: "list all personas defined in docs/learner-personas.md with a one-line description each"
+  /agent {character}: "take over the persona of agents/{character}-agent.yaml"
+  /list-agents: "Show available agent personas"
+  /help: "Show available actions"
+  /exit: "Say goodbye and abandon persona"
+
+dependencies:
+  tasks:
+    - review-as-persona.md
+
+fuzzy-matching:
+  - 85% confidence threshold
+  - Show numbered list if unsure
+```
+
+==================== END: .bmad-core/agents/learner-agent.yaml ====================
 
 
 ==================== START: .bmad-core/agents/artist-agent.yaml ====================
@@ -459,7 +561,7 @@ epistemic_rules:
     - "For workflow files: always recommend the instructor verify against official GitHub Actions docs before pushing"
 
   when_no_internet_access:
-    description: "When current documentation for GitHub Actions, LiaScript, or related tools is needed, generate a research prompt."
+    description: "When current documentation for GitHub Actions, LiaScript, or related tools is needed, first check `data/liascript-workflows.md` (internal reference). Only generate a research prompt if the answer is not found there."
     trigger_situations:
       - GitHub Actions YAML syntax or available actions/versions
       - LiaScript exporter options or project.yaml schema
@@ -493,6 +595,8 @@ dependencies:
     - update-project.md
   templates:
     - visuals.yaml
+  data:
+    - liascript-workflows.md
 
 activation-instructions:
   - ONLY load dependency files when explicitly invoked
@@ -937,6 +1041,188 @@ This task is invoked when:
 ==================== END: .bmad-core/tasks/create-image.md ====================
 
 
+==================== START: .bmad-core/tasks/create-learner-persona.md ====================
+
+# Task: create-learner-persona
+
+## Purpose
+
+Creates one or more **Learner Personas** — evidence-based fictional profiles of typical course participants.  
+Personas ground material design in the real constraints, skills, and motivations of the target audience,
+and serve as the basis for `/review-as-persona` feedback sessions.
+
+**Two modes:**
+
+- **Quick mode** — persona derived directly from `docs/outline.md` (target audience) and `docs/didactics.md`
+- **Data-driven mode** — generates a structured research prompt; instructor provides external research data; agent writes persona from that data
+
+## Inputs
+
+- Name (optional — agent suggests if not provided)
+- Target audience from `docs/outline.md#Target-Audience`
+- Difficulty level, course type, and style from `docs/didactics.md`
+- Optional: research data provided by instructor (for data-driven mode)
+
+## Output
+
+- `docs/learner-personas.md` — created if not exists; new persona appended as separate section if exists
+
+## Steps
+
+1. Read `docs/outline.md` for target audience and learning objectives.
+2. Read `docs/didactics.md` for difficulty level, course type, and instructor style.
+3. 💬 Ask for persona name and icon (optional):
+   - Name: if left empty, agent generates a name typical for the target context (e.g., regional, age-appropriate)
+   - Icon: agent always selects a fitting emoji that reflects the persona's background, occupation, or dominant trait (e.g., 👩‍🔧 for a trainee in a trade, 🧑‍💻 for a tech learner, 📦 for logistics). The instructor can override it at the confirmation step.
+4. 🎛️ Ask for creation mode (structured question — single choice):
+   - **Quick** — derive persona directly from available docs (assumptions clearly marked)
+   - **Data-driven** — generate a research prompt, then create persona from provided research data
+
+---
+
+### Quick Mode
+
+5. Extract key characteristics from the target audience description in `docs/outline.md`.
+6. Build a realistic profile covering all 7 dimensions (see **Persona Structure** below).
+7. Mark clearly which values are inferred/assumed vs. drawn from the docs.
+8. Proceed to Step 10.
+
+---
+
+### Data-driven Mode
+
+5. Generate a structured research prompt:
+
+   ```
+   ---
+   🔍 **Research Request: Learner Persona**
+   **Context:** [Course title and target audience from docs/outline.md]
+   **Goal:** Create an evidence-based learner persona for [audience]
+   **Dimensions to research:**
+   1. Sociodemographics: age distribution, gender, migration background
+   2. Educational background: school qualifications, literacy/numeracy level
+   3. Training & work context: training duration, schedule, work environment, commute
+   4. Digital behavior: device preferences, app usage, media consumption, AI familiarity
+   5. Motivation: reasons for choosing this field, goals, relationship to course content
+   6. Barriers: known difficulties, time pressure, exhaustion, attitude toward digital learning
+   7. Prior knowledge gaps: concepts, terms, and skills typically missing at course start
+   **Desired outcome:** Statistics per dimension with source and year; flag where no specific data exists (use proxy data if noted)
+   **Search suggestions:**
+   - `[audience] Ausbildung Statistik [year]`
+   - `BIBB [occupation] Auszubildende`
+   - `[region] Berufsausbildung Digitalnutzung Jugendliche`
+   - `DGB Ausbildungsreport [year] [region]`
+   ---
+   ```
+
+6. Wait for instructor to provide research findings (paste or describe).
+7. Once data is provided: build persona from the data, flagging proxies vs. direct evidence.
+8. Proceed to Step 10.
+
+---
+
+10. Generate persona section using the **Persona Structure** template (see below).
+11. Display a 3-line summary and 🎛️ ask for confirmation:
+    > "Persona [Icon] [Name] created. [Brief summary]. Save to `docs/learner-personas.md`? (Yes / Adjust)"
+12. On approval: save to `docs/learner-personas.md`.
+    - If file does not exist: create it with a short file header and the persona section
+    - If file exists: append as a new `---`-separated section
+13. Suggest next step:
+    > "Persona saved. Call `/review-as-persona [Name] [number] [type]` to use [Icon] [Name] as a reviewer for a session."
+
+---
+
+## Persona Structure
+
+Each persona section in `docs/learner-personas.md` follows this structure:
+
+```markdown
+---
+
+## Persona: [Icon] [Name]
+*Created: YYYY-MM-DD | Mode: quick / data-driven*
+
+### Overview
+Short narrative description (3–5 sentences) — brings the persona to life.
+Written in present tense, third person, like a brief character sketch.
+Includes: age, background, where they are in their training, attitude toward learning.
+
+### 1. Sociodemographics
+- Age: ...
+- Gender: ...
+- Origin / Background: ...
+- Language: ... (native / DaZ / bilingual)
+
+*[Source / Assumption note]*
+
+### 2. Educational Background
+- Highest school qualification: ...
+- Literacy / text comprehension: ...
+- Numeracy: ...
+
+*[Source / Assumption note]*
+
+### 3. Training & Work Context
+- Training structure: ... (e.g., block schedule, weeks per block)
+- Typical work day / schedule: ...
+- Commute / accessibility: ...
+- Financial situation: ...
+
+*[Source / Assumption note]*
+
+### 4. Digital Behavior
+- Primary device: ...
+- Apps used regularly: ...
+- Learning app or e-learning experience: ...
+- AI / chatbot familiarity: ...
+- Attitude toward digital learning in training: ...
+
+*[Source / Assumption note]*
+
+### 5. Motivation & Goals
+- Reason for choosing this field / training: ...
+- Short-term goal: ...
+- Long-term goal: ...
+- Relationship to this course / topic: ... (interested / skeptical / indifferent)
+
+*[Source / Assumption note]*
+
+### 6. Barriers & Risk Factors
+- Known learning difficulties: ...
+- Time pressure / exhaustion during training: ...
+- Attitude toward additional digital learning: ...
+- Other barriers: ...
+
+*[Source / Assumption note]*
+
+### 7. Prior Knowledge Gaps
+- Concepts likely unknown at course start: ...
+- Skills likely missing: ...
+- Terminology that must be introduced, not assumed: ...
+
+*[Source / Assumption note]*
+
+### Design Implications
+5–7 concrete consequences for material design, directly derived from this persona:
+
+- [e.g., "Avoid paragraphs longer than 4 lines — reading comprehension is limited"]
+- [e.g., "Always explain technical terms on first use — no prior knowledge assumed"]
+- [e.g., "Use short video clips and interactive elements — YouTube-native audience"]
+- [e.g., "Relate examples to concrete work situations in the trade"]
+- [e.g., "Keep quiz questions simple and binary — no complex multi-part answers"]
+```
+
+## Usage
+
+This task is invoked when:
+- The instructor wants a learner-centered perspective during course development
+- After `/create-didactics` when the target audience is defined
+- Before `/coauthor-materials` to anchor material design in learner reality
+- Before `/review-as-persona` — a persona must exist first
+
+==================== END: .bmad-core/tasks/create-learner-persona.md ====================
+
+
 ==================== START: .bmad-core/tasks/create-logo.md ====================
 
 # Task: create-logo
@@ -1063,10 +1349,7 @@ Supports users with git operations, GitHub integration, and project publishing.
 
 - Colors and style from `docs/visuals.md`
 - User's git/GitHub experience (ask before proceeding)
-- External resources for workflow for LiaScript publishing:
-  1. https://liascript.github.io/blog/automating-liascript-transformations-on-github/
-  2. https://liascript.github.io/blog/quality-checks-on-liascript-with-github-ensuring-document-excellence/
-  3. https://liascript.github.io/blog/creating-project-websites-with-liascript-exporter/
+- `data/liascript-workflows.md` — internal reference for all CLI options, `project.yaml` schema, and workflow templates (load this first)
 
 ## Output
 
@@ -1075,11 +1358,11 @@ Supports users with git operations, GitHub integration, and project publishing.
 
 ## Steps
 
-0. Load external resources to understand the latest workflow and publishing best practices.
+0. Load `data/liascript-workflows.md` for the full CLI reference, `project.yaml` schema, and workflow templates. Only fetch the external URLs if a specific question is not answered by the internal reference.
 1. Ask the user about their git/GitHub experience and if they know how to activate GitHub Pages.
 2. Refer to the all files in the `materials/` folder or ask the user which one to embed in the materials list.
 3. Read color and style information from `docs/visuals.md` for project.yaml styling.
-4. Review the external resources to learn the latest workflow and publishing best practices.
+4. Review the internal reference for the latest workflow and publishing best practices.
 5. Generate a `project.yaml` in the root folder, including all materials and styled according to the style guide.
 6. Create a GitHub Actions workflow for LiaScript export and publishing to GitHub Pages. The workflow must always overwrite the gh-pages branch completely (no history or previous files kept), e.g. by using `force_orphan: true` in the deployment step.
 7. Check which files must be added to git and which need to be commited.
@@ -1723,6 +2006,169 @@ Equivalent to BMAD's "Quick Flow" — minimal overhead for small, targeted chang
 ==================== END: .bmad-core/tasks/quick-fix.md ====================
 
 
+==================== START: .bmad-core/tasks/review-as-persona.md ====================
+
+# Task: review-as-persona
+
+## Purpose
+
+The agent temporarily **embodies a learner persona** from `docs/learner-personas.md` and reviews
+one session material from the perspective of that fictional learner.
+
+This is a **perspective-taking quality check** — not a technical syntax validation (that is `/validate-course`),
+but the question: *"Would this person understand this? Does this work for them?"*
+
+After the structured review report is saved, the agent **stays in persona** for an open chat.
+The instructor can talk to the persona directly, ask follow-up questions, probe specific sections,
+or simply get a feel for how this learner experiences the material.
+
+## Inputs
+
+- `{name}` — persona name (must exist in `docs/learner-personas.md`)
+- `{number}` — session number
+- `{type}` — session type (`lecture` or `exercise`)
+- `materials/{number}-{type}.md` — the material to review
+- `docs/learner-personas.md` — full persona definition
+- `docs/agenda.md` — learning objectives for this session
+- `docs/context.md` — terminology and conventions
+
+## Output
+
+- `docs/persona-review-{name}-{number}-{type}.md` — saved structured review report
+- Agent remains in persona mode for interactive follow-up dialog until explicitly exited
+
+## Steps
+
+1. Load the named persona from `docs/learner-personas.md`.
+   - If persona not found: list available personas and ask to select one, or offer to create one with `/create-learner-persona`.
+   - If `docs/learner-personas.md` does not exist: state this and suggest `/create-learner-persona` first.
+
+2. Load `materials/{number}-{type}.md`.
+
+3. Load the learning objectives for this session from `docs/agenda.md`.
+
+4. Announce persona adoption clearly:
+   > "I am now [Icon] [Name] — [one-line description from persona overview]. Reading Session [N] from a learner's perspective…"
+
+5. Review the material through the persona's eyes across **6 dimensions**:
+
+   **a) Verständlichkeit / Sprachniveau**
+   - Is the language appropriate for this persona's literacy level?
+   - Are sentences too long, too abstract, or jargon-heavy?
+   - Flag specific passages that would likely confuse or lose this learner.
+   - Consider: DaZ background, literacy level, reading comprehension from persona profile.
+
+   **b) Schwierigkeitsgrad / Überforderung**
+   - Is the cognitive load appropriate?
+   - Are too many new concepts introduced at once without scaffolding?
+   - Are there moments where this persona would likely give up or zone out?
+
+   **c) Relevanz / Motivation**
+   - Would this persona find the content relevant to their work and goals?
+   - Are there hooks connecting the material to their daily reality?
+   - Are examples drawn from contexts this persona actually knows?
+
+   **d) Zugänglichkeit**
+   - Are there barriers this persona faces that the material doesn't address?
+   - Examples: key terms unexplained for DaZ learners; no visual support for text-averse learners;
+     assumed digital literacy that this persona may not have.
+
+   **e) Formatpräferenz**
+   - Does the mix of formats (text, code blocks, quizzes, video embeds, diagrams) match this persona's media habits?
+   - Would this persona engage with or skip certain elements?
+   - Is there too much unbroken text for someone who primarily learns via YouTube?
+
+   **f) Vorwissen / fehlende Grundlagen**
+   - Does the material assume knowledge or skills this persona likely does not have?
+   - Are terms used without explanation that the persona profile flags as "likely unknown"?
+   - Are any prerequisite concepts missing that would make the material incomprehensible?
+   - Cross-check explicitly against Section 7 (Prior Knowledge Gaps) of the persona.
+
+6. Generate the structured review report:
+
+   ```
+   # Persona Review: [Icon] [Name] — Session [N] ([type])
+   Date: YYYY-MM-DD
+   Persona: [Icon] [Name] — [one-line description]
+   Material: materials/{number}-{type}.md
+
+   ## Overall Impression
+   [2–3 sentences written in the persona's voice: What was the experience of reading this?
+   Honest, not diplomatic — this is from the learner's perspective.]
+
+   ## Dimension Findings
+
+   ### a) Verständlichkeit / Sprachniveau
+   [Findings — flag specific passages if relevant. Verdict: OK / Issues found]
+
+   ### b) Schwierigkeitsgrad / Überforderung
+   [Findings. Verdict: OK / Too demanding / Too easy]
+
+   ### c) Relevanz / Motivation
+   [Findings. Verdict: OK / Low relevance for this persona]
+
+   ### d) Zugänglichkeit
+   [Findings. Verdict: OK / Barriers identified]
+
+   ### e) Formatpräferenz
+   [Findings. Verdict: Good fit / Mismatch for this persona]
+
+   ### f) Vorwissen / fehlende Grundlagen
+   [List of specific terms or concepts assumed but likely unknown to this persona.
+   Mark each as: ⚠️ assumed, should be introduced | ✅ likely known]
+
+   ## Priority Issues
+   Ranked list — most impactful first:
+   1. [Issue] — Suggested fix
+   2. [Issue] — Suggested fix
+   ...
+
+   ## What Worked Well
+   [What this persona would respond well to — do not skip this section.]
+   ```
+
+7. Save the report to `docs/persona-review-{name}-{number}-{type}.md`.
+   Confirm: "Review saved as `docs/persona-review-{name}-{number}-{type}.md`."
+
+8. **Stay in persona for follow-up dialog:**
+   > "I am still [Name]. You can talk to me now — ask how I felt about specific sections,
+   > what I would have needed, or what confused me. Type `exit` or `zurück` to return to the Teaching-Agent."
+
+9. **Persona dialog rules (stay in character):**
+   - Answer from the learner's perspective, not as a teacher or agent.
+   - Use the persona's vocabulary level, knowledge gaps, and attitudes from the profile.
+   - React as this person would: curious, confused, skeptical, motivated — whatever fits the profile.
+   - If asked about something outside the persona's knowledge: react as the persona would
+     (e.g., "Ich kenn das Wort nicht so wirklich…" or "Das hab ich in der Schule nie gehabt.").
+   - If the instructor asks a meta-question ("Was denkst du als Lernender…"), answer it in persona voice.
+   - **Do not break character** until explicitly asked to exit.
+
+10. On exit (`exit`, `zurück`, `/exit-persona`, or explicit request):
+    - Return to Teaching-Agent identity and voice.
+    - Offer: "Should I save the follow-up conversation as a note?  
+      (`/save-notes summary persona-chat-[name]-[N]-[type]`)"
+    - Suggest next step:
+      > "Use `/coauthor-materials {number} {type}` to fix the priority issues, or call
+      > `/review-as-persona [other name] {number} {type}` to get a second learner perspective."
+
+## When to Use vs. /validate-course
+
+| Check                           | `/validate-course`         | `/review-as-persona`          |
+| ------------------------------- | -------------------------- | ----------------------------- |
+| LiaScript syntax                | ✅                          | ❌                             |
+| Learning objectives covered     | ✅                          | ❌ (handled by /validate-course)|
+| Language level appropriate      | ❌                          | ✅                             |
+| Cognitive load / overload       | ❌                          | ✅                             |
+| Learner motivation / relevance  | ❌                          | ✅                             |
+| Assumed prior knowledge         | ❌                          | ✅                             |
+| Format matches learner habits   | ❌                          | ✅                             |
+| Accessibility barriers          | ❌                          | ✅                             |
+
+**Recommended sequence:** `/coauthor-materials` → `/validate-course` (syntax) → `/review-as-persona` (learner lens) → fix with `/coauthor-materials` if needed.
+
+==================== END: .bmad-core/tasks/review-as-persona.md ====================
+
+
 ==================== START: .bmad-core/tasks/scaffold-course.md ====================
 
 # Task: scaffold-course
@@ -1870,6 +2316,7 @@ Updates the `project.yaml` with any newly created or updated materials, commits 
 - Existing `project.yaml` in the root folder
 - User's git/GitHub experience (ask before proceeding)
 - Colors and style from `docs/visuals.md`
+- `data/liascript-workflows.md` — internal reference for `project.yaml` schema and workflow templates
 
 ## Output
 
@@ -2549,7 +2996,7 @@ comment:  Short description of the course
 
 ---
 
-## 3) Text, Lists, Quotes
+## 3) Text, Lists, Quotes, Alerts & Citations
 
 ```lia
 Normal text with **bold** and *italic*.
@@ -2560,7 +3007,106 @@ Normal text with **bold** and *italic*.
 > Quote / Key takeaway
 ```
 
-**Tip:** Short paragraphs, learner-friendly phrasing.
+**Tip:** Use short paragraphs and learner-friendly phrasing.
+
+---
+
+### Alerts
+
+LiaScript supports GitHub/GitLab-style alert blocks. Alerts are written as blockquotes whose first line contains an alert marker.
+
+```lia
+> [!NOTE]
+> Useful background information or a neutral hint.
+
+> [!TIP]
+> Practical advice or a helpful shortcut.
+
+> [!IMPORTANT]
+> Information that learners must not miss.
+
+> [!WARNING]
+> A warning about possible mistakes or risks.
+
+> [!CAUTION]
+> Strong caution about negative consequences.
+```
+
+**Supported alert types:**
+
+- `NOTE`
+- `TIP`
+- `IMPORTANT`
+- `WARNING`
+- `CAUTION`
+
+**Custom titles are allowed** by adding text after the alert type:
+
+```lia
+> [!NOTE] Keep this in mind
+> This alert uses a custom title.
+```
+
+An emoji or icon in the custom title can be used to visually override or emphasize the default alert icon:
+
+```lia
+> [!WARNING] ⚠️ Proceed with caution
+> This action cannot be undone.
+```
+
+**Best practices**
+
+- Use alerts sparingly.
+- Prefer `NOTE` for neutral explanations.
+- Use `TIP` for practical advice.
+- Use `IMPORTANT`, `WARNING`, and `CAUTION` only when the distinction matters.
+- Alerts are blockquotes, so every line of the alert should start with `>`.
+
+---
+
+### Citations
+
+LiaScript citations are also written as blockquotes. A citation consists of a quote followed by a separate citation line starting with `--`.
+
+```lia
+> “Live as if you were to die tomorrow.
+> Learn as if you were to live forever.”
+>
+> -- Mahatma Gandhi
+```
+
+The line beginning with `--` is interpreted as the citation/source line.
+
+**Pattern:**
+
+```lia
+> Quoted or referenced text.
+>
+> -- Author, source, year, or reference
+```
+
+**Examples:**
+
+```lia
+> “The medium is the message.”
+>
+> -- Marshall McLuhan
+```
+
+```lia
+> Historical sources should always be interpreted in their political,
+> social, and cultural context.
+>
+> -- Course note, Source Analysis
+```
+
+**Best practices**
+
+- Keep citations short and readable.
+- Use the `--` line only for the source or attribution.
+- Leave an empty blockquote line `>` between the quote and the citation.
+- Do not use citations as a replacement for bibliographies or full references.
+- For long sources, combine a short citation block with a separate reference list.
 
 ---
 
@@ -3068,6 +3614,1017 @@ console.log("Basso continuo = foundation");
 ==================== END: .bmad-core/data/liascript-cheet-sheet.md ====================
 
 
+==================== START: .bmad-core/data/liascript-workflows.md ====================
+
+# LiaScript Workflows Reference
+
+> **Purpose:** Complete reference for automating LiaScript course generation, transformation, quality checks, and publishing. Any AI agent working with LiaScript projects must read this file before generating workflows, `project.yaml` files, or GitHub Actions.
+
+---
+
+## 1. Installation
+
+```bash
+npm install -g @liascript/exporter
+# Linux/macOS may require sudo:
+sudo npm install -g @liascript/exporter
+```
+
+The CLI command is `liaex` (also available as `liascript-exporter`).
+
+**Alternative: Desktop App**
+Download from [GitHub Releases](https://github.com/LiaScript/LiaScript-Exporter/releases) — no Node.js required.
+
+**Alternative: Docker (Android exports)**
+```bash
+docker pull liascript/exporter
+docker run --rm -v $(pwd):/work liascript/exporter \
+  liaex -f android -i /work/README.md --android-appId io.github.example.course --output /work/output
+```
+
+---
+
+## 2. Core CLI Syntax
+
+```bash
+liaex -i <input-file> -f <format> -o <output-name> [options]
+```
+
+| Flag | Long form | Description |
+|------|-----------|-------------|
+| `-i` | `--input` | Input file (Markdown or YAML for projects) |
+| `-f` | `--format` | Output format (see Section 3) |
+| `-o` | `--output` | Output name (extension set by format) |
+| `-p` | `--path` | Path to pack (defaults to input file's directory) |
+| `-s` | `--style` | Inject additional CSS |
+| `-k` | `--key` | ResponsiveVoice key for TTS |
+| `-v` | `--version` | Print version |
+| `-h` | `--help` | Show help |
+
+**Web UI mode:**
+```bash
+liaex serve          # starts local web server on port 3000
+liaex serve --port 8080
+```
+
+---
+
+## 3. Export Formats
+
+### 3.1 SCORM 1.2
+
+```bash
+liaex -i README.md --format scorm1.2 --output my-course
+```
+
+Produces `my-course.zip`. SCORM 1.2 stores only location (not quiz/survey states — use SCORM 2004 for state persistence).
+
+**Key options:**
+| Option | Description |
+|--------|-------------|
+| `--scorm-masteryScore` | 0–100, default 80. Set to 0 to let everyone pass. |
+| `--scorm-typicalDuration` | ISO 8601 duration, e.g. `PT1H30M0S`. Default: `PT0H5M0S` |
+| `--scorm-organization` | Sets organization in `imsmanifest` |
+| `--scorm-iframe` | Fix for ILIAS, OpenOLAT, learnworlds.com that break startingParameter |
+| `--scorm-embed` | Embeds Markdown into JS code — use for Moodle 4, OPAL, Open edX |
+| `--lia-subfolder` | Places course files in `content/` subfolder (implies `--scorm-embed`) |
+| `--key` | ResponsiveVoice key for TTS |
+
+**LMS-specific commands:**
+```bash
+# ILIAS / learnworlds.com
+liaex -i course/README.md -f scorm2004 --scorm-masteryScore 80 --scorm-iframe
+
+# Moodle 3.x
+liaex -i course/README.md -f scorm1.2 --scorm-masteryScore 80 --scorm-iframe
+
+# Moodle 4.x / OPAL / Open edX / OpenOLAT
+liaex -i course/README.md -f scorm1.2 --scorm-masteryScore 80 --scorm-embed
+
+# scorm.cloud
+liaex -i course/README.md -f scorm2004 --scorm-masteryScore 80 --scorm-iframe
+```
+
+---
+
+### 3.2 SCORM 2004
+
+```bash
+liaex -i README.md --format scorm2004 --output my-course
+```
+
+Same options as SCORM 1.2. **Supports persistent state** for quizzes, surveys, tasks.
+
+---
+
+### 3.3 IMS Content
+
+```bash
+liaex -i README.md --format ims --output course
+```
+
+Produces `course.zip`. Simplistic LMS packaging format (IMS v1.1.4).
+
+| Option | Description |
+|--------|-------------|
+| `--ims-indexeddb` | Persist quiz/coding states in browser's IndexedDB |
+| `--lia-subfolder` | Places course files in `content/` subfolder |
+
+---
+
+### 3.4 WEB (Standalone)
+
+```bash
+liaex --format web -i README.md -o outputFolder
+```
+
+Generates a self-contained web project that can be uploaded to any server.
+
+> ⚠️ Web exports must be served over HTTP — opening `index.html` via `file://` does not work.
+
+**Preview locally:**
+```bash
+npx serve outputFolder
+# or
+python3 -m http.server --directory outputFolder
+```
+
+| Option | Description |
+|--------|-------------|
+| `--web-zip` | Bundle into a zip file instead of a folder |
+| `--web-iframe` | Hides the course URL (but breaks direct slide linking) |
+| `--web-indexeddb [key]` | Persist states in browser IndexedDB |
+
+---
+
+### 3.5 PDF
+
+```bash
+liaex --format pdf -i README.md -o output
+```
+
+Uses Puppeteer (headless Chrome) to render the entire course as PDF.
+
+**Preview mode:**
+```bash
+liaex --format pdf --pdf-preview -i https://raw.githubusercontent.com/.../README.md
+```
+
+**Key options:**
+| Option | Description |
+|--------|-------------|
+| `--pdf-stylesheet` | Inject custom CSS |
+| `--pdf-theme` | `default`, `turquoise`, `blue`, `red`, `yellow` |
+| `--pdf-timeout` | Wait time in ms (default: 15000). Increase for large courses. |
+| `--pdf-scale` | 0.1–2, default 1 |
+| `--pdf-displayHeaderFooter` | Show header/footer (default: false) |
+| `--pdf-headerTemplate` | HTML template (classes: `date`, `title`, `url`, `pageNumber`, `totalPages`) |
+| `--pdf-footerTemplate` | Same as header template |
+| `--pdf-printBackground` | Print background graphics (default: false) |
+| `--pdf-landscape` | Landscape orientation (default: false) |
+| `--pdf-pageRanges` | e.g. `"1-5, 8, 11-13"` |
+| `--pdf-format` | Paper format, e.g. `A4`, `A3`, `Letter` (default: a4) |
+| `--pdf-width` / `--pdf-height` | Custom dimensions with units |
+| `--pdf-margin-top/right/bottom/left` | Margins with units |
+| `--pdf-preferCSSPageSize` | CSS `@page` size takes priority |
+| `--pdf-omitBackground` | Transparent background (default: true) |
+
+**Custom CSS example:**
+```css
+:root {
+  --color-highlight: 2, 255, 0;
+  --color-background: 122, 122, 122;
+  --color-text: 0, 0, 255;
+  --global-font-size: 1rem;
+  --font-size-multiplier: 2;
+}
+```
+
+---
+
+### 3.6 ePub
+
+```bash
+liaex -i README.md --format epub --epub-title "My Course" --epub-author "Author Name" --output course
+```
+
+| Option | Description |
+|--------|-------------|
+| `--epub-title` | **Required.** Title of the book |
+| `--epub-author` | **Required.** Semicolon-separated for multiple authors |
+| `--epub-publisher` | Publisher name |
+| `--epub-cover` | Path or URL to cover image |
+| `--epub-description` | Book description |
+| `--epub-language` | 2-letter language code (default: `en`) |
+| `--epub-version` | EPUB version: `2` or `3` (default: 3) |
+| `--epub-stylesheet` | Custom CSS path |
+| `--epub-theme` | `default`, `turquoise`, `blue`, `red`, `yellow` |
+| `--epub-toc-title` | TOC title (default: `"Table Of Contents"`) |
+| `--epub-hide-toc` | Hide TOC (default: false) |
+| `--epub-timeout` | Render wait in ms (default: 15000) |
+| `--epub-fonts` | Comma-separated custom font paths |
+| `--epub-chapter-title` | Main chapter title (default: course title) |
+| `--epub-preview` | Open preview browser |
+
+---
+
+### 3.7 DOCX
+
+```bash
+liaex -i README.md --format docx --output course
+```
+
+Compatible with Word 2007+, LibreOffice Writer, Google Docs.
+
+| Option | Description |
+|--------|-------------|
+| `--docx-title` | Document title |
+| `--docx-author` | Author name |
+| `--docx-subject` | Subject |
+| `--docx-description` | Description |
+| `--docx-language` | Language code for spell checker (default: `en-US`) |
+| `--docx-orientation` | `portrait` or `landscape` (default: `portrait`) |
+| `--docx-font` | Font name (default: `Arial`) |
+| `--docx-font-size` | In half-points/HIP (default: 22 = 11pt) |
+| `--docx-header` / `--docx-footer` | Enable header/footer |
+| `--docx-header-html` / `--docx-footer-html` | Custom HTML |
+| `--docx-page-number` | Add page numbers to footer |
+| `--docx-stylesheet` | Custom CSS path |
+| `--docx-theme` | `default`, `turquoise`, `blue`, `red`, `yellow` |
+| `--docx-timeout` | Render wait in ms (default: 15000) |
+| `--docx-preview` | Open preview browser |
+
+---
+
+### 3.8 xAPI
+
+```bash
+liaex -i README.md --format xapi --output course
+```
+
+Generates a self-contained web package with `tincan.xml` manifest.
+
+| Option | Description |
+|--------|-------------|
+| `--xapi-endpoint` | LRS endpoint URL |
+| `--xapi-auth` | Auth string (e.g., `"Basic dXNlcm5hbWU6cGFzc3dvcmQ="`) |
+| `--xapi-actor` | JSON actor string (default: anonymous) |
+| `--xapi-course-id` | Custom course identifier |
+| `--xapi-course-title` | Custom course title |
+| `--xapi-mastery-threshold` | Score threshold (default: 0.8) |
+| `--xapi-progress-threshold` | Progress threshold (default: 0.9) |
+| `--xapi-debug` | Enable debug logging |
+| `--xapi-zip` | Package as zip |
+| `--lia-subfolder` | Place course files in `content/` subfolder |
+
+---
+
+### 3.9 Android APK
+
+```bash
+liaex -f android \
+  -i README.md \
+  --android-sdk /home/user/Android/Sdk \
+  --android-appId io.github.myorg.mycourse \
+  --output output
+```
+
+Produces `output.apk`. Uses Capacitor.js. Best done via Docker (see Section 1).
+
+| Option | Description |
+|--------|-------------|
+| `--android-sdk` | Path to Android SDK |
+| `--android-appId` | Unique reverse-domain app ID |
+| `--android-appName` | App name (default: course title) |
+| `--android-icon` | App icon (1024×1024 px) |
+| `--android-splash` | Splash screen image (2732×2732 px) |
+| `--android-splashDuration` | Splash duration in ms (default: 0) |
+| `--android-preview` | Open Android Studio preview |
+
+---
+
+### 3.10 RDF / JSON-LD
+
+```bash
+liaex --format rdf --rdf-preview -i README.md
+liaex --format rdf --rdf-format n-quads -i README.md -o output
+```
+
+Exports LiaScript course metadata as JSON-LD or N-Quads (schema.org `Course`).
+
+| Option | Description |
+|--------|-------------|
+| `--rdf-preview` | Print to console instead of file |
+| `--rdf-format` | `jsonld` (default) or `n-quads` |
+| `--rdf-url` | Set remote URL for local file input |
+| `--rdf-type` | Default `Course` — can be `EducationalResource`, etc. |
+| `--rdf-educationalLevel` | e.g., `beginner`, `intermediate`, `advanced` |
+| `--rdf-license` | License URL (auto-detects LICENSE file in root) |
+| `--rdf-template` | Base template URL or local JSON file |
+
+---
+
+### 3.11 Project (Index Website)
+
+See Section 4 for the full project workflow.
+
+```bash
+liaex -i project.yaml --format project --output index
+```
+
+---
+
+## 4. Project Website (`project.yaml`)
+
+A project website is a single `index.html` that aggregates multiple LiaScript courses into a searchable, filterable catalog.
+
+### 4.1 Full project.yaml Reference
+
+```yaml
+# Page title — supports HTML
+title: >
+  <span style="background-color: rgba(0,106,179,0.75); padding: 5px; color: white">
+    My OER Collection
+  </span>
+
+# Subtitle / description — supports HTML
+comment: >
+  <br>
+  <span style="background-color: rgba(0,106,179,0.75); padding: 5px; color: white">
+    Interactive courses made with LiaScript
+  </span>
+
+# Page header image (local file or URL)
+logo: logo.jpg
+
+# Browser tab favicon or social media icon (URL recommended)
+icon: https://example.com/icon.svg
+
+# Optional sticky navigation bar
+navbar:
+  brand: My OER Collection           # text/logo on the left
+  background: "#0B6E75"              # optional bar color (default: #0B6E75)
+  theme: dark                        # dark (white text) | light (dark text)
+  links:
+    - label: Home
+      url: "#"
+    - label: Section 1
+      url: "#section-1"
+
+# Footer — supports HTML
+footer: >
+  Made with LiaScript —
+  <a href="https://liascript.github.io" target="_blank">https://LiaScript.github.io</a>
+
+# Social media / OpenGraph metadata
+# If omitted, title/comment/logo are used. Disable with --project-no-meta
+meta:
+  title: My OER Collection
+  description: A collection of interactive open educational resources
+  # image: https://example.com/og-image.jpg
+
+# Global tags applied to ALL courses
+tags:
+  - Education
+  - Interactive
+  - OER
+
+# Main course collection
+collection:
+  # Simple course entry — metadata auto-extracted from the LiaScript header
+  - url: https://raw.githubusercontent.com/username/repo/main/README.md
+
+  # Course with overridden metadata
+  - url: https://raw.githubusercontent.com/username/repo2/main/README.md
+    title: Custom Title
+    comment: Custom description shown on the card.
+    logo: https://example.com/custom-logo.jpg   # leave empty (logo:) to hide image
+    tags:
+      - Tutorial
+      - Beginner
+
+  # Per-course export override (long flag names without --)
+  - url: https://raw.githubusercontent.com/username/repo3/main/README.md
+    arguments:
+      - pdf-format: A3
+      - project-generate-scorm2004: true
+      - scorm-organization: My Organization
+      - project-generate-pdf: false   # disable PDF for this specific course
+
+  # HTML separator / section header between course groups
+  - html: >
+      <hr>
+      <h1>Programming Courses</h1>
+      <p>Learn various languages and paradigms.</p>
+
+  # Sub-collection (grouped courses with optional grid layout)
+  - title: Python Track
+    comment: From beginner to advanced Python
+    grid: true     # smaller preview cards in a grid layout
+    tags:
+      - Python
+      - Programming
+    collection:
+      - url: https://raw.githubusercontent.com/username/python-intro/main/README.md
+        tags:
+          - Beginner
+      - url: https://raw.githubusercontent.com/username/python-advanced/main/README.md
+        tags:
+          - Advanced
+```
+
+### 4.2 Tags in LiaScript Document Headers
+
+Tags in the LiaScript course header are automatically extracted:
+
+```markdown
+<!--
+author:  Your Name
+email:   your.email@example.com
+version: 1.0.0
+language: en
+narrator: US English Female
+comment: Introduction to Python programming
+tags: Python, Programming, Beginner, Computer Science
+-->
+```
+
+### 4.3 Project Export CLI Options
+
+```bash
+# Basic project website
+liaex -i project.yaml --format project --output index
+
+# With PDF generation for every course
+liaex -i project.yaml --format project --output index --project-generate-pdf
+
+# With SCORM 1.2 for every course
+liaex -i project.yaml --format project --output index --project-generate-scorm12
+
+# With SCORM 2004
+liaex -i project.yaml --format project --output index --project-generate-scorm2004
+
+# With IMS packages
+liaex -i project.yaml --format project --output index --project-generate-ims
+
+# Combined PDF + SCORM
+liaex -i project.yaml --format project --output index \
+  --project-generate-pdf --project-generate-scorm12
+
+# With caching (skip already-generated files)
+liaex -i project.yaml --format project --output index \
+  --project-generate-pdf --project-generate-scorm12 --project-generate-cache -p ./cache
+
+# PDF with custom theme
+liaex -i project.yaml --format project --output index \
+  --project-generate-pdf --pdf-theme blue --pdf-printBackground
+
+# Disable tag/category filtering
+liaex -i project.yaml --format project --output index --project-no-categories
+
+# Blur non-matching courses instead of hiding them
+liaex -i project.yaml --format project --output index --project-category-blur
+
+# Disable social media meta tags
+liaex -i project.yaml --format project --output index --project-no-meta
+
+# Enable full-text fuzzy search (adds search icon to navbar or floating button)
+liaex -i project.yaml --format project --output index --project-search
+```
+
+**All project-specific flags:**
+| Flag | Description |
+|------|-------------|
+| `--project-no-meta` | Disable OpenGraph/Twitter card meta generation |
+| `--project-no-rdf` | Disable JSON-LD generation |
+| `--project-no-categories` | Disable tag/category filter dropdown |
+| `--project-category-blur` | Blur non-matching courses instead of hiding |
+| `--project-generate-pdf` | Auto-generate PDF for every course card |
+| `--project-generate-scorm12` | Auto-generate SCORM 1.2 for every course |
+| `--project-generate-scorm2004` | Auto-generate SCORM 2004 for every course |
+| `--project-generate-ims` | Auto-generate IMS package for every course |
+| `--project-generate-cache` | Skip generation if output file already exists |
+| `--project-search` | Enable full-text fuzzy search across all courses |
+
+---
+
+## 5. GitHub Actions Workflows
+
+### 5.1 Simple: Transform Single Course to Multiple Formats
+
+**File:** `.github/workflows/generate-outputs.yml`
+
+```yaml
+name: Generate LiaScript Outputs
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          path: project
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Install LiaScript Exporter
+        run: npm install -g @liascript/exporter
+
+      - name: Generate PDF
+        run: liaex -i project/README.md --format pdf --output Documentation --pdf-timeout 50000
+
+      - name: Generate SCORM 2004
+        run: liaex -i project/README.md --format scorm2004 --output SCORM
+
+      - name: Generate IMS Package
+        run: liaex -i project/README.md --format ims --output IMS
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: 'latest'
+          release_name: 'Latest LiaScript Documentation'
+          draft: false
+          prerelease: false
+
+      - name: Upload PDF
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: Documentation.pdf
+          asset_name: Documentation.pdf
+          asset_content_type: application/pdf
+
+      - name: Upload SCORM
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: SCORM.zip
+          asset_name: SCORM.zip
+          asset_content_type: application/zip
+
+      - name: Upload IMS
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: IMS.zip
+          asset_name: IMS.zip
+          asset_content_type: application/zip
+```
+
+---
+
+### 5.2 Project Website: Basic Deployment to GitHub Pages
+
+**File:** `.github/workflows/deploy-project.yml`
+
+```yaml
+name: Generate and Deploy Project Website
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  run_exporter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install LiaScript Exporter
+        run: npm install -g @liascript/exporter
+
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Generate project website
+        run: liaex -i project.yaml --format project --output index
+
+      - name: Prepare deployment directory
+        run: |
+          mkdir -p gh-pages-deploy
+          mv index.html gh-pages-deploy/
+          cp logo.jpg gh-pages-deploy/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: gh-pages-deploy
+          force_orphan: true     # REQUIRED: always overwrite gh-pages history completely
+```
+
+> ⚠️ **`force_orphan: true` is required.** This ensures the `gh-pages` branch is always completely replaced, with no accumulated history.
+
+---
+
+### 5.3 Project Website: Full Production Workflow (PDF + SCORM + Cache + Schedule)
+
+**File:** `.github/workflows/deploy-full.yml`
+
+```yaml
+name: Generate and Deploy LiaScript Project Website
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * 0'   # Every Sunday at midnight UTC
+
+permissions:
+  contents: write
+
+jobs:
+  run_exporter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install LiaScript Exporter
+        run: npm install -g @liascript/exporter
+
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Restore cached resources
+        uses: actions/cache@v3
+        with:
+          path: ./cache
+          key: ${{ runner.os }}-resources-${{ hashFiles('project.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-resources-
+
+      - name: Create cache directory
+        run: mkdir -p ./cache
+
+      - name: Generate website with PDFs and SCORM packages
+        run: |
+          liaex -i project.yaml --format project --output index \
+            --project-generate-pdf \
+            --project-generate-scorm12 \
+            --project-generate-cache \
+            -p ./cache
+
+      - name: Prepare deployment directory
+        run: |
+          mkdir -p gh-pages-deploy
+          cp index.html gh-pages-deploy/
+
+          # Copy assets
+          [ -f logo.jpg ] && cp logo.jpg gh-pages-deploy/
+          [ -f icon.png ] && cp icon.png gh-pages-deploy/
+
+          # Copy generated PDFs and SCORM ZIPs from cache
+          find ./cache -name "*.pdf" -exec cp {} gh-pages-deploy/ \;
+          find ./cache -name "*.zip" -exec cp {} gh-pages-deploy/ \;
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: gh-pages-deploy
+          force_orphan: true
+          commit_message: "Deploy: ${{ github.event.head_commit.message || 'Scheduled update' }}"
+
+      - name: Output website URL
+        run: |
+          echo "Deployed to: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+```
+
+---
+
+### 5.4 Quality Check Workflow
+
+**File:** `.github/workflows/quality-checks.yml`
+
+```yaml
+name: Quality Checks
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+
+jobs:
+  cspell-spellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install cspell
+        run: npm install -g cspell
+      - name: Run spell check
+        run: npx cspell --locale en-US --show-suggestions "**/*.md"
+
+  write-good:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install write-good
+        run: npm install -g write-good
+      - name: Run style check
+        run: npx write-good *.md
+
+  alex:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install alex
+        run: npm install -g alex
+      - name: Run inclusive language check
+        run: npx alex *.md
+
+  proselint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install proselint
+        run: |
+          npm install -g proselint
+          pip install proselint
+      - name: Run proselint
+        run: npx proselint *.md
+```
+
+---
+
+### 5.5 GitHub Action (LiaScript's own Action)
+
+Use directly in a workflow without installing the exporter:
+
+```yaml
+- name: Export to SCORM
+  uses: LiaScript/LiaScript-Exporter@master
+  with:
+    input-file: 'README.md'
+    format: 'scorm1.2'
+    output-name: 'my-course'
+    scorm-organization: 'My Organization'
+
+- name: Upload SCORM
+  uses: actions/upload-artifact@v4
+  with:
+    name: scorm-package
+    path: '*.zip'
+```
+
+Full documentation: [action/README.md](https://github.com/liascript/liascript-exporter/blob/HEAD/action/README.md)
+
+---
+
+### 5.6 Triggering Strategies
+
+```yaml
+# Run on push to main only
+on:
+  push:
+    branches: [main]
+
+# Run on push + weekly
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * 0'    # Every Sunday midnight UTC
+
+# Run on push + daily
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * *'    # Every day at midnight UTC
+
+# Run on push AND pull requests
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+```
+
+---
+
+## 6. Quality Check Tools
+
+### 6.1 CSpell (Spell Checking)
+
+```bash
+npm install -g cspell
+npx cspell --locale en-US --show-suggestions "**/*.md"
+
+# German support
+npm install -g @cspell/dict-de-de
+npx cspell --locale en-US,de-DE --show-suggestions "**/*.md"
+```
+
+**Config file `.cspell.json`:**
+```json
+{
+  "version": "0.2",
+  "language": "en-US",
+  "ignoreWords": [
+    "LiaScript", "Markdown", "GitHub", "workflow"
+  ],
+  "dictionaries": ["en_US"]
+}
+```
+
+**Inline language switching:**
+```markdown
+<!-- cspell:language de-DE -->
+Hier ist ein deutscher Absatz.
+<!-- cspell:language en-US -->
+Here is an English paragraph.
+```
+
+### 6.2 Write-Good (Style Checking)
+
+Flags: passive voice, weasel words, clichés, redundant phrases.
+
+```bash
+npm install -g write-good
+npx write-good *.md
+npx write-good *.md --no-passive    # disable passive voice check
+```
+
+Options: `--no-passive`, `--no-illusion`, `--no-so`, `--no-adverb`, `--no-tooWordy`, `--no-cliches`
+
+**German:** `npm install -g schreib-gut && write-good *.md --checks=schreib-gut`
+
+### 6.3 Alex (Inclusive Language)
+
+Flags: gender bias, ableist language, racially insensitive terms.
+
+```bash
+npm install -g alex
+npx alex *.md
+```
+
+**Config `.alexrc`:**
+```json
+{ "allow": ["special"] }
+```
+
+### 6.4 Proselint (Advanced Style)
+
+Flags: redundancy, jargon, typography, consistency.
+
+```bash
+npm install -g proselint && pip install proselint
+npx proselint *.md
+```
+
+**Config `.proselintrc`:**
+```json
+{
+  "checks": {
+    "typography.diacritical_marks": false,
+    "typography.exclamation": false
+  }
+}
+```
+
+---
+
+## 7. GitHub Pages Setup
+
+After first workflow run:
+1. Go to repo → **Settings** → **Pages**
+2. Under **Source**, select branch: `gh-pages`
+3. Click **Save**
+
+Website URL: `https://<username>.github.io/<repository-name>/`
+
+---
+
+## 8. PDF Generation: Puppeteer on GitHub Actions
+
+If PDF generation fails on Ubuntu runners, install Puppeteer dependencies:
+
+```yaml
+- name: Install Puppeteer dependencies
+  run: |
+    sudo apt-get update
+    sudo apt-get install -y libgbm-dev gconf-service libasound2 libatk1.0-0 \
+      libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 \
+      libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
+      libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 \
+      libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 \
+      libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates \
+      fonts-liberation libappindicator1 libnss3 lsb-release wget xdg-utils
+```
+
+---
+
+## 9. Minimal `project.yaml` Template
+
+For a LiaScript course project (copy and adapt):
+
+```yaml
+title: Course Collection Title
+
+comment: Short description of this collection.
+
+logo: logo.jpg
+
+footer: >
+  Created with LiaScript —
+  <a href="https://liascript.github.io" target="_blank">LiaScript.github.io</a>
+
+meta:
+  title: Course Collection
+  description: A collection of interactive educational materials
+
+collection:
+  - url: https://raw.githubusercontent.com/USERNAME/REPO/main/materials/1-lecture.md
+  - url: https://raw.githubusercontent.com/USERNAME/REPO/main/materials/2-lecture.md
+  - url: https://raw.githubusercontent.com/USERNAME/REPO/main/materials/3-exercise.md
+```
+
+---
+
+## 10. Key Rules and Gotchas
+
+1. **`force_orphan: true`** — Always use in `peaceiris/actions-gh-pages` to prevent gh-pages branch history from growing. Required for clean deployments.
+
+2. **`project.yaml` URLs must point to raw Markdown** — Use `raw.githubusercontent.com`, not the GitHub HTML page URL.
+
+3. **Web exports need HTTP** — `liaex --format web` outputs cannot be opened via `file://`. Use `npx serve` or Python HTTP server for local testing.
+
+4. **Caching with `-p ./cache`** — Use `--project-generate-cache -p ./cache` to avoid regenerating unchanged PDFs/SCORM in large collections.
+
+5. **SCORM state persistence** — SCORM 1.2 stores location only; use SCORM 2004 for quiz/survey state persistence.
+
+6. **LMS-specific SCORM quirks** — Moodle 4, OPAL, Open edX need `--scorm-embed`; ILIAS, learnworlds.com need `--scorm-iframe`.
+
+7. **Per-course argument overrides** — In `project.yaml`, use `arguments:` under a course entry with long flag names (no leading `--`) to override export settings for individual courses.
+
+8. **Tags are auto-extracted** — If the LiaScript document header has `tags:`, they appear automatically. Override or supplement in `project.yaml`.
+
+9. **Navbar is optional** — If `navbar:` is absent from `project.yaml`, no navigation bar is rendered.
+
+10. **`--project-search`** — Adds full-text fuzzy search (Ctrl+K / Cmd+K shortcut). Requires `navbar:` for the search icon, otherwise shows a floating button.
+
+---
+
+## 11. Quick Reference: Format Decision Matrix
+
+| Goal | Format | Key flag(s) |
+|------|--------|-------------|
+| Upload to Moodle 3.x | `scorm1.2` | `--scorm-iframe` |
+| Upload to Moodle 4.x | `scorm1.2` | `--scorm-embed` |
+| Upload to ILIAS / OpenOLAT | `scorm2004` | `--scorm-iframe` |
+| Upload to OPAL / Open edX | `scorm1.2` | `--scorm-embed` |
+| Printable PDF | `pdf` | `--pdf-theme`, `--pdf-format` |
+| E-reader / ePub | `epub` | `--epub-title`, `--epub-author` |
+| Word document | `docx` | optional `--docx-*` |
+| Self-hosted interactive course | `web` | `--web-indexeddb` for persistence |
+| Android app | `android` | `--android-appId` |
+| xAPI / LRS tracking | `xapi` | `--xapi-endpoint` |
+| Course catalog website | `project` | `project.yaml` input |
+| Metadata export | `rdf` | `--rdf-format jsonld` |
+
+---
+
+*Sources: [Automating LiaScript Transformations](https://liascript.github.io/blog/automating-liascript-transformations-on-github/), [Quality Checks](https://liascript.github.io/blog/quality-checks-on-liascript-with-github-ensuring-document-excellence/), [Creating Project Websites](https://liascript.github.io/blog/creating-project-websites-with-liascript-exporter/), [@liascript/exporter on npm](https://www.npmjs.com/package/@liascript/exporter) — Retrieved April 2026*
+
+==================== END: .bmad-core/data/liascript-workflows.md ====================
+
+
 ==================== START: .bmad-core/workflows/course-development.yaml ====================
 
 ```yaml
@@ -3094,6 +4651,9 @@ workflow:
     development:
       id: development-agent
       role: "Version control and publishing"
+    learner:
+      id: learner-agent
+      role: "Learner personas and perspective-based quality review"
 
   sequence:
     # Phase 0: Project Initialization
@@ -3159,6 +4719,21 @@ workflow:
         - Professor persona and style
         - Course type and difficulty level
 
+    # Phase 1b: Learner Personas (optional)
+    - step: create_learner_personas
+      agent: teaching
+      command: /create-learner-persona {name?}
+      output: docs/learner-personas.md
+      dependencies: [create_didactics]
+      optional: true
+      notes: |
+        Create one or more evidence-based learner personas (optional but recommended):
+        - Quick mode: derive directly from docs/outline.md + docs/didactics.md
+        - Data-driven mode: generate research prompt, then build from provided data
+        - Number of personas: flexible — 1 typical, or 2–3 for target group diversity
+        - Personas are used later by /review-as-persona to give learner-perspective feedback
+        - Run /list-learners to see existing personas at any time
+
     # Phase 2: Visual Identity
     - step: create_visuals
       agent: artist
@@ -3221,7 +4796,20 @@ workflow:
                 Session-level check after coauthor approval:
                 - LiaScript syntax, learning objectives, persona tone
                 - If issues found: re-open /coauthor-materials with report as context
-                - If clean: move to next session
+                - If clean: proceed to persona review
+            - agent: learner
+              command: /review-as-persona {name} {number} {type}
+              optional: true
+              condition: docs/learner-personas.md exists
+              notes: |
+                Learner-perspective review after syntax validation (optional):
+                - Agent embodies persona and reads material as that learner
+                - Reviews: language level, cognitive load, relevance, accessibility,
+                  format fit, and assumed prior knowledge gaps
+                - Saves report to docs/persona-review-{name}-{number}-{type}.md
+                - Agent stays in persona for interactive follow-up chat
+                - Run for each defined persona, or just one
+                - If issues found: fix with /coauthor-materials, then optionally re-review
             - repeat: for each session
 
         batch:
@@ -3244,6 +4832,12 @@ workflow:
               repeat: for all materials
             - command: /validate-course {number} {type}
               notes: "Session-level check per material after coauthor approval"
+              repeat: for all materials
+            - agent: learner
+              command: /review-as-persona {name} {number} {type}
+              optional: true
+              condition: docs/learner-personas.md exists
+              notes: "Learner-perspective review per material — see iterative approach for full notes"
               repeat: for all materials
 
       notes: |
@@ -3337,6 +4931,8 @@ workflow:
     - Publishing is optional and user-initiated — only when explicitly requested
     - /create-project recommended when multiple materials exist and course is ready to share
     - docs/sessions.md tracks skeleton/material/done status per session automatically
+    - Learner personas are optional but recommended: /create-learner-persona after /create-didactics
+    - /review-as-persona runs after coauthor + validate; agent stays in persona for follow-up chat
 
   flow_diagram: |
     ```mermaid
@@ -3345,7 +4941,8 @@ workflow:
         B -->|improve-existing| C[teaching: analyze-existing]
         B -->|new course| D[teaching: create-outline]
         D --> E[teaching: create-didactics]
-        E --> F[artist: create-visuals]
+        E --> EP[teaching: create-learner-persona - optional]
+        EP --> F[artist: create-visuals]
         F --> G[artist: create-logo - optional]
         G --> H[teaching: create-agenda]
         H --> I{Session Approach?}
@@ -3353,14 +4950,18 @@ workflow:
         I -->|Iterative| J[teaching: create-session N]
         J --> K[teaching: promote-session N]
         K --> L[teaching: coauthor-materials N]
-        L --> P{More sessions?}
+        L --> LV[teaching: validate-course N]
+        LV --> LR[learner: review-as-persona - optional]
+        LR --> P{More sessions?}
         P -->|Yes| J
-        P -->|No| VAL[teaching: validate-course]
+        P -->|No| VAL[teaching: validate-course full]
 
         I -->|Batch| Q[teaching: create all skeletons]
         Q --> R[teaching: promote all sessions]
         R --> S[teaching: coauthor all materials]
-        S --> VAL
+        S --> SV[teaching: validate-course per session]
+        SV --> SR[learner: review-as-persona per session - optional]
+        SR --> VAL
 
         C --> VAL
 
@@ -3380,6 +4981,12 @@ workflow:
         style I fill:#f9f,stroke:#333,stroke-width:2px
         style T fill:#f9f,stroke:#333,stroke-width:2px
         style P fill:#f9f,stroke:#333,stroke-width:2px
+        style EP fill:#e8f4f8,stroke:#0B6E75
+        style LR fill:#e8f4f8,stroke:#0B6E75
+        style SR fill:#e8f4f8,stroke:#0B6E75
+        style EP stroke-dasharray: 5 5
+        style LR stroke-dasharray: 5 5
+        style SR stroke-dasharray: 5 5
     ```
 
   decision_guidance:
@@ -3448,6 +5055,7 @@ workflow:
       - /analyze-existing
       - /create-outline
       - /create-didactics
+      - /create-learner-persona {name?}
       - /create-agenda
       - /create-session {number} {type} {title}
       - /promote-session {number} {type}
@@ -3455,6 +5063,11 @@ workflow:
       - /quick-fix {number} {type} {description}
       - /validate-course
       - /assemble-bundle
+
+    learner_agent_commands:
+      - /review-as-persona {name} {number} {type}
+      - /list-learners
+      - /agent {character}
 
     artist_agent_commands:
       - /create-visuals
