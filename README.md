@@ -1,1 +1,1 @@
-# Arbeits--und-Gesundheitsschutz
+# Arbeits- und Gesundheitsschutz
