@@ -1,14 +1,13 @@
 <!--
-
 author:    Hilke Domsch; Volker Göhler
 email:     hilke.domsch@gkz-ev.de
 version:   0.0.9
+date:      2025-07-21
 
 language:  de
 narrator:  Deutsch Female
 
 edit:      https://github.dev/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/blob/main/materials/arbeitsschutz_rettungszeichen.md
-date:      2025-07-21
 
 icon:      ../assets/img/Logo_234px.png
 logo:      https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ISO_Exit_-_Right.svg/960px-ISO_Exit_-_Right.svg.png
@@ -24,7 +23,6 @@ import:    https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/LiaScript_Dr
 
 tags:      Arbeitssicherheit,
            Gesundheitsschutz
-
 -->
 
 # Arbeitssicherheit & Gesundheitsschutz - Rettungszeichen

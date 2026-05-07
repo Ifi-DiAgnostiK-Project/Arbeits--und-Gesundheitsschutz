@@ -1,34 +1,34 @@
 <!--
+author:    Hilke Domsch; Volker Göhler
+email:     hilke.domsch@gkz-ev.de
+version:   0.0.13
+date:      2025-07-21
 
-author:   Hilke Domsch; Volker Göhler
-email:    hilke.domsch@gkz-ev.de
-version:  0.0.13
+language:  de
+narrator:  Deutsch Female
 
-language: de
-narrator: Deutsch Female
+edit:      https://github.dev/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/blob/main/materials/arbeitsschutz_leitern1.md
 
-edit:     https://github.dev/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/blob/main/materials/arbeitsschutz_leitern1.md
-date:     2025-07-21
+icon:      ../assets/img/Logo_234px.png
+logo:      https://upload.wikimedia.org/wikipedia/commons/5/5c/Bockleiter.png
 
-icon:     ../assets/img/Logo_234px.png
-logo:     https://upload.wikimedia.org/wikipedia/commons/5/5c/Bockleiter.png
+comment:   Arbeitssicherheit & Gesundheitsschutz - Leitern I
 
-comment:  Arbeitssicherheit & Gesundheitsschutz - Leitern I
+attribute: Sicherheitszeichen von
+           [Berufsgenossenschaft Holz und Metall](https://www.bghm.de/arbeitsschuetzer/praxishilfen/sicherheitszeichen)
+           <br>
+           title image Von User:Jenkyll - Eigenes Werk, CC BY-SA 3.0,
+           https://commons.wikimedia.org/w/index.php?curid=15880414
 
-attribute:
-  - Sicherheitszeichen von [Berufsgenossenschaft Holz und Metall](https://www.bghm.de/arbeitsschuetzer/praxishilfen/sicherheitszeichen)
-  - title image Von User:Jenkyll - Eigenes Werk, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=15880414
+link:      style.css
 
-link:     style.css
+import:    https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/LiaScript_DragAndDrop_Template/refs/heads/main/README.md
+           https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/Piktogramme/refs/heads/main/makros.md
+           https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/LiaScript_ImageQuiz/refs/heads/main/README.md
 
-import:   https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/LiaScript_DragAndDrop_Template/refs/heads/main/README.md
-          https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/Piktogramme/refs/heads/main/makros.md
-          https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/LiaScript_ImageQuiz/refs/heads/main/README.md
-
-tags:     Arbeitssicherheit,
-          Gesundheitsschutz,
-          Leitern
-
+tags:      Arbeitssicherheit,
+           Gesundheitsschutz,
+           Leitern
 -->
 
 # Arbeitssicherheit & Gesundheitsschutz - Leitern I

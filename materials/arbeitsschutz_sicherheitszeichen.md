@@ -1,14 +1,13 @@
 <!--
-
 author:    Hilke Domsch; Volker Göhler
 email:     hilke.domsch@gkz-ev.de
 
 version:   0.0.9
 language:  de
 narrator:  Deutsch Female
+date:      2025-07-21
 
 edit:      https://github.dev/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/blob/main/materials/arbeitsschutz_sicherheitszeichen.md
-date:      2025-07-21
 
 icon:      ../assets/img/Logo_234px.png
 logo:      https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/ISO_7010_W002.svg/960px-ISO_7010_W002.svg.png
@@ -27,7 +26,6 @@ title:     Sicherheitszeichen
 tags:      Arbeitssicherheit,
            Sicherheitszeichen,
            Gesundheitsschutz
-
 -->
 
 # Arbeitssicherheit und Gesundheitsschutz -- Sicherheitszeichen

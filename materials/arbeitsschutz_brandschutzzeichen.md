@@ -1,20 +1,21 @@
 <!--
-
 author:    Hilke Domsch; Volker Göhler
 email:     hilke.domsch@gkz-ev.de
 version:   0.0.8
+date:      2025-07-21
+
 language:  de
 narrator:  Deutsch Female
 
 edit:      https://github.dev/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/blob/main/materials/arbeitsschutz_brandschutzzeichen.md
 
-date:      2025-07-21
 logo:      https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/ISO_7010_F001.svg/1920px-ISO_7010_F001.svg.png
 icon:      ../assets/img/Logo_234px.png
 
 comment:   Brandschutzzeichen
 
-attribute: Sicherheitszeichen von [Berufsgenossenschaft Holz und Metall](https://www.bghm.de/arbeitsschuetzer/praxishilfen/sicherheitszeichen)
+attribute: Sicherheitszeichen von
+           [Berufsgenossenschaft Holz und Metall](https://www.bghm.de/arbeitsschuetzer/praxishilfen/sicherheitszeichen)
 
 link:      style.css
 import:    https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/LiaScript_DragAndDrop_Template/refs/heads/main/README.md
@@ -24,7 +25,6 @@ import:    https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/LiaScript_Dr
 tags:      Arbeitssicherheit,
            Brandschutzzeichen,
            Gesundheitsschutz
-
 -->
 
 # Arbeitssicherheit und Gesundheitsschutz

@@ -1,34 +1,36 @@
 <!--
+author:    Hilke Domsch; Volker Göhler
+email:     hilke.domsch@gkz-ev.de
+version:   0.0.10
+date:      2025-07-21
 
-author:   Hilke Domsch; Volker Göhler
-email:    hilke.domsch@gkz-ev.de
-version:  0.0.10
-language: de
-narrator: Deutsch Female
+language:  de
+narrator:  Deutsch Female
 
-edit: https://github.dev/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/blob/main/materials/arbeitsschutz_Arbeitsundgesundheitsschutz.md
-date: 2025-07-21
+edit:      https://github.dev/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/blob/main/materials/arbeitsschutz_Arbeitsundgesundheitsschutz.md
 
-icon: ../assets/img/Logo_234px.png
-logo: https://upload.wikimedia.org/wikipedia/commons/c/cc/Bundesarchiv_Bild_183-41030-0002%2C_Sichtwerbung_f%C3%BCr_Arbeits-_und_Gesundheitsschutzes.jpg
+icon:      ../assets/img/Logo_234px.png
+logo:      https://upload.wikimedia.org/wikipedia/commons/c/cc/Bundesarchiv_Bild_183-41030-0002%2C_Sichtwerbung_f%C3%BCr_Arbeits-_und_Gesundheitsschutzes.jpg
 
-attribute: title image Von Bundesarchiv, Bild 183-41030-0002 / Draum / CC-BY-SA 3.0, CC BY-SA 3.0 de, https://commons.wikimedia.org/w/index.php?curid=5428443
+attribute: title image Von Bundesarchiv, Bild 183-41030-0002 / Draum /
+           CC-BY-SA 3.0, CC BY-SA 3.0 de,
+           https://commons.wikimedia.org/w/index.php?curid=5428443
 
 
-attribute: Sicherheitszeichen von [Berufsgenossenschaft Holz und Metall](https://www.bghm.de/arbeitsschuetzer/praxishilfen/sicherheitszeichen)
+attribute: Sicherheitszeichen von
+           [Berufsgenossenschaft Holz und Metall](https://www.bghm.de/arbeitsschuetzer/praxishilfen/sicherheitszeichen)
 
-comment:  Arbeitssicherheit & Gesundheitsschutz
+comment:   Arbeitssicherheit & Gesundheitsschutz
 
-link:   style.css
+link:      style.css
 
-import: https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/LiaScript_DragAndDrop_Template/refs/heads/main/README.md
-        https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/Piktogramme/refs/heads/main/makros.md
-        https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/LiaScript_ImageQuiz/refs/heads/main/README.md
-        https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/Bildersammlung/refs/heads/main/makros.md
+import:    https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/LiaScript_DragAndDrop_Template/refs/heads/main/README.md
+           https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/Piktogramme/refs/heads/main/makros.md
+           https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/LiaScript_ImageQuiz/refs/heads/main/README.md
+           https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/Bildersammlung/refs/heads/main/makros.md
 
-tags: Arbeitssicherheit,
-      Gesundheitsschutz
-
+tags:      Arbeitssicherheit,
+           Gesundheitsschutz
 -->
 
 # Arbeitssicherheit und Gesundheitsschutz -- Allgemeine Fragen

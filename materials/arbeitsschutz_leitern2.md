@@ -1,13 +1,13 @@
 <!--
-
 author:    Hilke Domsch; Volker Göhler
 email:     hilke.domsch@gkz-ev.de
 version:   0.0.11
+date:      2025-07-21
+
 language:  de
 narrator:  Deutsch Female
 
 edit:      https://github.dev/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/blob/main/materials/arbeitsschutz_leitern2.md
-date:      2025-07-21
 
 icon:      ../assets/img/Logo_234px.png
 logo:      https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Telesteps_telescopic_ladder_-_closed.jpg/960px-Telesteps_telescopic_ladder_-_closed.jpg
@@ -19,6 +19,7 @@ attribute:
   - title image Von Mark Hunter - https://www.flickr.com/photos/toolstop/4986746659/, CC BY 2.0, https://commons.wikimedia.org/w/index.php?curid=81370072
 
 link:      style.css
+
 import:    https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/LiaScript_DragAndDrop_Template/refs/heads/main/README.md
            https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/Piktogramme/refs/heads/main/makros.md
            https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/LiaScript_ImageQuiz/refs/heads/main/README.md
@@ -26,7 +27,6 @@ import:    https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/LiaScript_Dr
 tags:      Arbeitssicherheit,
            Gesundheitsschutz,
            Leitern
-
 -->
 
 # Arbeitssicherheit & Gesundheitsschutz - Leitern II
