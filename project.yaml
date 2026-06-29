@@ -87,9 +87,9 @@ collection:
       </div>
 
 
-  - url: https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/refs/heads/main/materials/arbeitsschutz_Arbeitsundgesundheitsschutz.md
-  - url: https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/refs/heads/main/materials/arbeitsschutz_brandschutzzeichen.md
-  - url: https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/refs/heads/main/materials/arbeitsschutz_leitern1.md
-  - url: https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/refs/heads/main/materials/arbeitsschutz_leitern2.md
-  - url: https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/refs/heads/main/materials/arbeitsschutz_rettungszeichen.md
-  - url: https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/Arbeits--und-Gesundheitsschutz/refs/heads/main/materials/arbeitsschutz_sicherheitszeichen.md
+  - url: https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/arbeitsschutz-arbeits-und-gesundheitsschutz/main/README.md
+  - url: https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/arbeitsschutz-brandschutzzeichen/main/README.md
+  - url: https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/arbeitsschutz-leitern-1/main/README.md
+  - url: https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/arbeitsschutz-leitern-2/main/README.md
+  - url: https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/arbeitsschutz-rettungszeichen/main/README.md
+  - url: https://raw.githubusercontent.com/Ifi-DiAgnostiK-Project/arbeitsschutz-sicherheitszeichen/main/README.md

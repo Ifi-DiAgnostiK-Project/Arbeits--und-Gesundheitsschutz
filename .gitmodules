@@ -1,0 +1,18 @@
+[submodule "materials/arbeitsschutz-arbeits-und-gesundheitsschutz"]
+	path = materials/arbeitsschutz-arbeits-und-gesundheitsschutz
+	url = https://github.com/Ifi-DiAgnostiK-Project/arbeitsschutz-arbeits-und-gesundheitsschutz.git
+[submodule "materials/arbeitsschutz-brandschutzzeichen"]
+	path = materials/arbeitsschutz-brandschutzzeichen
+	url = https://github.com/Ifi-DiAgnostiK-Project/arbeitsschutz-brandschutzzeichen.git
+[submodule "materials/arbeitsschutz-leitern-1"]
+	path = materials/arbeitsschutz-leitern-1
+	url = https://github.com/Ifi-DiAgnostiK-Project/arbeitsschutz-leitern-1.git
+[submodule "materials/arbeitsschutz-leitern-2"]
+	path = materials/arbeitsschutz-leitern-2
+	url = https://github.com/Ifi-DiAgnostiK-Project/arbeitsschutz-leitern-2.git
+[submodule "materials/arbeitsschutz-rettungszeichen"]
+	path = materials/arbeitsschutz-rettungszeichen
+	url = https://github.com/Ifi-DiAgnostiK-Project/arbeitsschutz-rettungszeichen.git
+[submodule "materials/arbeitsschutz-sicherheitszeichen"]
+	path = materials/arbeitsschutz-sicherheitszeichen
+	url = https://github.com/Ifi-DiAgnostiK-Project/arbeitsschutz-sicherheitszeichen.git
